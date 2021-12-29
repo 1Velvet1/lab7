@@ -26,6 +26,7 @@ public:
 
 	};
 
+	void changeStudent();
 	void print() const;
 	void print(printFlags flags) const;
 	
@@ -52,6 +53,6 @@ bool nameSort(const Student& l, const Student& r);
 
 void randomizeStudent(Student& st);
 
-
+std::istream& operator>>(std::istream& is, Student& st);
 
 #endif // !STUDENT___H

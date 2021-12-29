@@ -6,7 +6,7 @@
 3. Удаление элементов из начала deque и удаление из set.*/
 
 
-int main() {
+int main(int argc, char* argv[]) {
 
 	srand(time(NULL));
 	//***************PART 1*******************//
@@ -25,16 +25,56 @@ int main() {
 	del_from_deckf(deq);
 	del_from_set(st);
 	//***************PART 2*******************//
-
+	
+	const std::string mode = std::string(argv[1]);
 	std::deque<Student> stVec;
 	Student temp;
 
-	for (size_t i = 0; i < 7; i++) {
+	if (mode == std::string("auto")) {
 
-		randomizeStudent(temp);
+		
+		for (size_t i = 0; i < 7; i++) {
+
+			randomizeStudent(temp);
+			stVec.emplace_back(temp);
+
+			stVec[i].print();
+
+		}	
+
+	}
+	else if (mode == std::string("file")) {
+
+		std::ifstream in("input.txt");
+
+		if (!in.is_open()) {
+
+			std::cout << "Impossible to read from file\nexiting...\n";
+			exit(-4);
+
+		}
+
+		while (!in.eof()) {
+
+			std::cin >> temp;
+			stVec.emplace_back(temp);
+
+			stVec[stVec.size() - 1].print();
+
+		}
+
+
+	}
+	else if (mode == std::string("keyboard")) {
+
+		temp.changeStudent();
 		stVec.emplace_back(temp);
-	
-		stVec[i].print();
+
+	}
+	else {
+
+		std::cout << "Wrong input arguement\n[auto/file/keyboard] should be given\n";
+		exit(-2);
 
 	}
 

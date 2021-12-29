@@ -19,6 +19,11 @@ std::string randomizeName() {
 		std::string temp;
 		std::ifstream in("fname.txt");
 
+		if (!in.is_open()) {
+			std::cout << "Impossible to auto-generate students\nStopping...\n";
+			exit(-3);
+		}
+
 		while (!in.eof()) {
 
 			in >> temp;
@@ -27,6 +32,12 @@ std::string randomizeName() {
 		}
 		in.close();
 		in.open("lname.txt");
+
+		if (!in.is_open()) {
+			std::cout << "Impossible to auto-generate students\nStopping...\n";
+			exit(-3);
+		}
+
 		while (!in.eof()) {
 
 			in >> temp;
@@ -35,6 +46,7 @@ std::string randomizeName() {
 		}
 
 		flag = true;
+
 
 	}
 	return fName[rand() % fName.size()] + " " + sName[rand() % sName.size()];
@@ -102,6 +114,7 @@ void Student::print() const{
 	std::cout << std::endl << std::endl;
 
 }
+
 void Student::print(printFlags flags) const{
 
 	if (flags & printFlags::STUD_NAME) { std::cout << "Name: " << this->full_name << std::endl; }
@@ -116,5 +129,29 @@ void Student::print(printFlags flags) const{
 	}
 
 	std::cout << std::endl;
+
+}
+
+void Student::changeStudent() {
+
+	std::cout << "Enter full name: ";
+	std::cin >> this->full_name;
+	std::cout << "Enter group: ";
+	std::cin >> this->group;
+	std::cout << "Enter record book number: ";
+	std::cin >> this->RBnumber;
+	std::cout << "Enter marks: ";
+	std::cin >> this->Smarks[0] >> this->Smarks[1] >> this->Smarks[2] >> this->Smarks[3];
+
+}
+
+std::istream& operator>>(std::istream& is, Student& st) {
+
+	std::getline(is, st.full_name);
+	is >> st.group;
+	is >> st.RBnumber;
+	is >> st.Smarks[0] >> st.Smarks[1] >> st.Smarks[2] >> st.Smarks[3];
+
+	return is;
 
 }
